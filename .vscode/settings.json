@@ -1,0 +1,8 @@
+{
+    "psi-header.variables": [
+		["projectCreationYear", "2020"],
+        ["projectname", "TransGrub"],
+        ["license", "GPLv3"],
+        ["licenseURL", "https://www.gnu.org/licenses/gpl-3.0.en.html"]
+],
+}

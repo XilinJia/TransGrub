@@ -1,0 +1,163 @@
+#:kivy 1.1
+
+
+# Project: TransGrub
+# Copyright (c) 2020 Xilin Jia <https://github.com/XilinJia>
+# This software is released under the GPLv3 license
+# https://www.gnu.org/licenses/gpl-3.0.en.html
+
+
+# Define your background color Template
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            
+# Now you can simply Mix the `BackgroundColor` class with almost
+# any other widget... to give it a background.
+<BackgroundLabel@Label+BackgroundColor>
+    background_color: 0, 0, 0, 0
+    # Default the background color for this label
+    # to r 0, g 0, b 0, a 0
+
+#<IconButton@ButtonBehavior, Image>
+#    background_color: 0, 0, 0, 0
+
+
+<TransGrub>:
+    title_label: title_label
+    opts_layout: opts_layout
+    pieces_stack: pieces_stack
+    clues_field: clues_field
+    solutions_field: solutions_field
+    check_stack: check_stack
+    get_hint_btn: get_hint_btn
+    luck_btn: luck_btn
+    progres_box: progres_box
+
+    padding: [10, 10, 10, 10]
+
+    canvas:
+        Color:
+            rgb: (0.1, 0.7, 0.7)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        pos_hint: {'left': 0, 'top': 1}
+        size_hint: 1, 0.5
+
+        BoxLayout:
+            id: opts_layout
+            orientation: 'horizontal'
+            spacing: 10
+            size_hint: 1, 0.08
+
+            IconButton:
+                id: config_btn
+                source: 'settings.png'
+                size_hint_max_x: self.parent.height * 1.1
+                size_hint_min_x: self.parent.height
+                on_release: root.do_config()
+
+            IconButton:
+                id: new_game_btn
+                source: 'new.png'
+                size_hint_max_x: self.parent.height * 1.6
+                size_hint_min_x: self.parent.height
+                on_press: root.on_new_game()
+
+            Spinner:
+                id: luck_btn
+                text: ''
+                background_normal: 'lucky.png'
+                background_disabled_normal: 'lucky1.png'
+                values: ["1.", "1.2", "1.5", "1.8", "2.0", "2.5", "3.0"]
+                size_hint_max_x: self.parent.width * .08
+                size_hint_min_x: self.parent.height
+            
+            Label:
+                id: title_label
+                text: 'languages'
+                size_hint_min_x: 400
+                halign: 'center'
+                font_size: '18sp'
+
+            BoxLayout:
+                id: progres_box
+                orientation: 'horizontal'
+                spacing: 1
+                size_hint_max_x: self.parent.width * 0.1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 2
+            size_hint: 1, 0.33
+
+            BackgroundLabel:
+                id: clues_field
+                text: ''
+                halign: 'justify'
+                strip: True
+                line_height: 1.15
+                background_color: 0, 0.3, 0.2, 1
+                foreground_color: 1, 0.8, 0, 1
+                font_name: "Roboto"
+                font_size: '17sp'
+                size_hint: 0.75, 1
+
+            BackgroundLabel:
+                id: solutions_field
+                text: ''
+                halign: 'center'
+                line_height: 1.15
+                background_color: 0, 0.3, 0.2, 1
+                foreground_color: 1, 0.8, 0, 1
+                font_name: "Roboto"
+                font_size: '17sp'
+                size_hint: 0.25, 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+            size_hint: 1, 0.08
+
+            IconButton:
+                id: get_hint_btn
+                source: 'hint.png'
+                size_hint_max_x: 0.8*self.parent.height
+                size_hint_min_x: 0.7*self.parent.height
+                on_press: root.on_get_hint()
+                
+            StackLayout:
+                id: check_stack
+                orientation: 'lr-bt'
+                pos_hint: {'x': 0.15, 'top': 1}
+                canvas:
+                    Color:
+                        rgb: (0.5, 0.4, 0.2)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+            IconButton:
+                id: check_btn
+                source: 'check.png'
+                size_y: self.parent.height
+                size_hint_max_x: self.parent.height *1.4
+                size_hint_min_x: self.parent.height *1.2
+                pos_hint: {'right': 1, 'top': 1}
+                on_press: root.on_check()
+
+    StackLayout:
+        id: pieces_stack
+        orientation: 'lr-bt'
+        size_hint_x: 1
+        spacing: 10
+        pos_hint: {'x': 0, 'bottom': 0}
